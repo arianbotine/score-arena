@@ -1,0 +1,708 @@
+<template>
+  <div class="podium-container">
+    <div class="podium-title">
+      <h2>🏆 Pódio</h2>
+    </div>
+
+    <div v-if="props.players.length === 0" class="no-podium">
+      <p>Adicione jogadores para ver o pódio</p>
+    </div>
+
+    <div v-else class="podium-scene">
+      <!-- 2º Lugar (Esquerda) -->
+      <div
+        v-if="secondPlaceGroup.length > 0"
+        class="podium-position position-2"
+        :class="{ 'has-tie': secondPlaceGroup.length > 1 }"
+        :style="{ '--grid-size': getGridSize(secondPlaceGroup.length) }"
+      >
+        <div class="players-group">
+          <div
+            v-for="player in secondPlaceGroup"
+            :key="player.id"
+            class="player-in-group"
+          >
+            <div class="player-avatar silver">
+              <span class="avatar-initial">{{ getInitial(player.name) }}</span>
+            </div>
+            <div class="player-name">{{ player.name }}</div>
+            <div class="player-points">{{ formatPoints(player.points) }}</div>
+          </div>
+        </div>
+        <div class="podium-block silver-block">
+          <div class="medal-icon">🥈</div>
+          <div class="position-number">2º</div>
+        </div>
+      </div>
+
+      <!-- 1º Lugar (Centro - Mais Alto) -->
+      <div
+        v-if="firstPlaceGroup.length > 0"
+        class="podium-position position-1"
+        :class="{ 'has-tie': firstPlaceGroup.length > 1 }"
+        :style="{ '--grid-size': getGridSize(firstPlaceGroup.length) }"
+      >
+        <div class="crown">👑</div>
+        <div class="players-group">
+          <div
+            v-for="player in firstPlaceGroup"
+            :key="player.id"
+            class="player-in-group"
+          >
+            <div class="player-avatar gold">
+              <span class="avatar-initial">{{ getInitial(player.name) }}</span>
+            </div>
+            <div class="player-name">{{ player.name }}</div>
+            <div class="player-points">{{ formatPoints(player.points) }}</div>
+          </div>
+        </div>
+        <div class="podium-block gold-block">
+          <div class="medal-icon">🥇</div>
+          <div class="position-number">1º</div>
+        </div>
+      </div>
+
+      <!-- 3º Lugar (Direita) -->
+      <div
+        v-if="thirdPlaceGroup.length > 0"
+        class="podium-position position-3"
+        :class="{ 'has-tie': thirdPlaceGroup.length > 1 }"
+        :style="{ '--grid-size': getGridSize(thirdPlaceGroup.length) }"
+      >
+        <div class="players-group">
+          <div
+            v-for="player in thirdPlaceGroup"
+            :key="player.id"
+            class="player-in-group"
+          >
+            <div class="player-avatar bronze">
+              <span class="avatar-initial">{{ getInitial(player.name) }}</span>
+            </div>
+            <div class="player-name">{{ player.name }}</div>
+            <div class="player-points">{{ formatPoints(player.points) }}</div>
+          </div>
+        </div>
+        <div class="podium-block bronze-block">
+          <div class="medal-icon">🥉</div>
+          <div class="position-number">3º</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demais jogadores -->
+    <div v-if="otherPlayers.length > 0" class="other-players">
+      <h3 class="other-players-title">Outros Jogadores</h3>
+      <div class="other-players-list">
+        <div
+          v-for="player in otherPlayers"
+          :key="player.id"
+          class="other-player-item"
+        >
+          <div class="other-rank">{{ player.rank }}º</div>
+          <div class="other-avatar">
+            <span>{{ getInitial(player.name) }}</span>
+          </div>
+          <div class="other-info">
+            <div class="other-name">{{ player.name }}</div>
+            <div class="other-points">
+              {{ formatPoints(player.points) }} pts
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+  players: {
+    type: Array,
+    required: true,
+  },
+});
+
+const getInitial = (name) => {
+  return name.charAt(0).toUpperCase();
+};
+
+const formatPoints = (points) => {
+  return points.toLocaleString("pt-BR");
+};
+
+// Agrupar jogadores por posição (1º, 2º, 3º)
+const firstPlaceGroup = computed(() => {
+  return props.players.filter((p) => p.rank === 1);
+});
+
+const secondPlaceGroup = computed(() => {
+  return props.players.filter((p) => p.rank === 2);
+});
+
+const thirdPlaceGroup = computed(() => {
+  return props.players.filter((p) => p.rank === 3);
+});
+
+// Jogadores que não estão no pódio (posição > 3)
+const otherPlayers = computed(() => {
+  return props.players
+    .filter((p) => p.rank > 3)
+    .sort((a, b) => {
+      if (a.rank !== b.rank) return a.rank - b.rank;
+      return b.points - a.points;
+    });
+});
+
+// Calcula o tamanho da grade quadrada baseado no número de jogadores
+const getGridSize = (numPlayers) => {
+  if (numPlayers === 1) return 1;
+  // Encontra o menor n onde 2^n >= numPlayers
+  return Math.ceil(Math.sqrt(numPlayers));
+};
+</script>
+
+<style scoped>
+.podium-container {
+  width: 100%;
+}
+
+.podium-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.podium-title h2 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 20px rgba(251, 191, 36, 0.3);
+  animation: shine 3s ease-in-out infinite;
+}
+
+@keyframes shine {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+}
+
+.no-podium {
+  text-align: center;
+  padding: 80px 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+}
+
+.podium-scene {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 60px;
+  perspective: 1000px;
+}
+
+.podium-position {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: podiumEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+@keyframes podiumEntry {
+  from {
+    opacity: 0;
+    transform: translateY(100px) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.position-1 {
+  animation-delay: 0.2s;
+  z-index: 3;
+}
+
+.position-2 {
+  animation-delay: 0s;
+  z-index: 2;
+}
+
+.position-3 {
+  animation-delay: 0.4s;
+  z-index: 1;
+}
+
+.crown {
+  font-size: 40px;
+  position: absolute;
+  top: -50px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Grupo de jogadores empatados */
+.players-group {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size, 1), 1fr);
+  grid-auto-rows: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+  width: fit-content;
+  align-items: end;
+}
+
+.has-tie .players-group {
+  gap: 16px;
+}
+
+.player-in-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeInUp 0.5s ease backwards;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.player-in-group:hover {
+  background: rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.player-in-group:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.player-in-group:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.player-in-group:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.player-in-group:nth-child(n + 4) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.player-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+  border: 3px solid;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.has-tie .player-avatar {
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+  border-width: 2px;
+}
+
+.player-avatar:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.gold {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #fef3c7;
+  box-shadow: 0 8px 32px rgba(251, 191, 36, 0.6);
+}
+
+.silver {
+  background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%);
+  border-color: #f3f4f6;
+  box-shadow: 0 8px 32px rgba(156, 163, 175, 0.6);
+}
+
+.bronze {
+  background: linear-gradient(135deg, #f97316 0%, #c2410c 100%);
+  border-color: #fed7aa;
+  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.6);
+}
+
+.avatar-initial {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.player-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 2px;
+  text-align: center;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.has-tie .player-name {
+  font-size: 12px;
+  max-width: 80px;
+}
+
+.player-points {
+  font-size: 16px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+
+.has-tie .player-points {
+  font-size: 14px;
+}
+
+.podium-block {
+  width: 140px;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border: 2px solid;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.has-tie .podium-block {
+  width: fit-content;
+  min-width: calc(
+    var(--grid-size, 1) * 90px + (var(--grid-size, 1) - 1) * 16px + 40px
+  );
+}
+
+.podium-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.gold-block {
+  height: 200px;
+  background: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #fef3c7;
+  box-shadow: 0 -4px 20px rgba(251, 191, 36, 0.4);
+}
+
+.silver-block {
+  height: 150px;
+  background: linear-gradient(180deg, #e5e7eb 0%, #9ca3af 100%);
+  border-color: #f3f4f6;
+  box-shadow: 0 -4px 20px rgba(156, 163, 175, 0.4);
+}
+
+.bronze-block {
+  height: 120px;
+  background: linear-gradient(180deg, #f97316 0%, #c2410c 100%);
+  border-color: #fed7aa;
+  box-shadow: 0 -4px 20px rgba(249, 115, 22, 0.4);
+}
+
+.medal-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+  animation: bounce 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.position-number {
+  font-size: 32px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.tie-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.9) 0%,
+    rgba(220, 38, 38, 0.9) 100%
+  );
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-top: 8px;
+  z-index: 1;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(239, 68, 68, 0.8);
+  }
+}
+
+/* Outros jogadores */
+.other-players {
+  margin-top: 40px;
+}
+
+.other-players-title {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.other-players-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.other-player-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(30, 30, 46, 0.6);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.other-player-item:hover {
+  background: rgba(30, 30, 46, 0.8);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateX(4px);
+}
+
+.other-rank {
+  font-size: 24px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.4);
+  min-width: 40px;
+  text-align: center;
+}
+
+.other-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.3) 0%,
+    rgba(59, 130, 246, 0.3) 100%
+  );
+  border: 2px solid rgba(139, 92, 246, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+}
+
+.other-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.other-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.other-points {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .podium-scene {
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .podium-position {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .position-1,
+  .position-2,
+  .position-3 {
+    order: 0;
+  }
+
+  .players-group {
+    gap: 8px;
+    grid-template-columns: repeat(var(--grid-size, 1), 1fr);
+    grid-template-rows: repeat(var(--grid-size, 1), 1fr);
+  }
+
+  .has-tie .players-group {
+    gap: 10px;
+  }
+
+  .player-in-group {
+    padding: 8px;
+  }
+
+  .player-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .has-tie .player-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .podium-block {
+    width: 100%;
+  }
+
+  .has-tie .podium-block {
+    width: 100%;
+    min-width: calc(
+      var(--grid-size, 1) * 70px + (var(--grid-size, 1) - 1) * 10px + 32px
+    );
+    max-width: 100%;
+  }
+
+  .gold-block {
+    height: 140px;
+  }
+
+  .silver-block {
+    height: 120px;
+  }
+
+  .bronze-block {
+    height: 100px;
+  }
+
+  .player-name {
+    font-size: 12px;
+    max-width: 70px;
+  }
+
+  .has-tie .player-name {
+    font-size: 11px;
+    max-width: 60px;
+  }
+
+  .player-points {
+    font-size: 14px;
+  }
+
+  .has-tie .player-points {
+    font-size: 12px;
+  }
+
+  .medal-icon {
+    font-size: 32px;
+  }
+
+  .position-number {
+    font-size: 24px;
+  }
+
+  .tie-count {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .other-players-list {
+    grid-template-columns: 1fr;
+  }
+}
+</style>

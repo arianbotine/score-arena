@@ -1,0 +1,21 @@
+{
+  "name": "score-arena",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "pinia": "^3.0.4",
+    "vite": "^7.2.2",
+    "vue": "^3.5.24"
+  }
+}

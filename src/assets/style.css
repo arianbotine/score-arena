@@ -1,0 +1,200 @@
+/* Reset e configurações base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Cores do sistema glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: rgba(31, 38, 135, 0.15);
+
+  /* Blur e efeitos */
+  --blur-amount: 20px;
+  --blur-light: 10px;
+  --saturation: 180%;
+
+  /* Cores de ação */
+  --color-primary: rgba(0, 122, 255, 0.25);
+  --color-success: rgba(52, 199, 89, 0.25);
+  --color-danger: rgba(255, 59, 48, 0.25);
+  --color-secondary: rgba(142, 142, 147, 0.25);
+
+  /* Textos */
+  --text-primary: rgba(255, 255, 255, 1);
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-tertiary: rgba(255, 255, 255, 0.6);
+  --text-disabled: rgba(255, 255, 255, 0.4);
+
+  /* Espaçamentos */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+
+  /* Transições */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Sombras */
+  --shadow-sm: 0 2px 8px 0 rgba(31, 38, 135, 0.15);
+  --shadow-md: 0 4px 16px 0 rgba(31, 38, 135, 0.2);
+  --shadow-lg: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  --shadow-xl: 0 16px 48px 0 rgba(31, 38, 135, 0.3);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+#app {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Utilidades de glassmorphism */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--blur-amount)) saturate(var(--saturation));
+  -webkit-backdrop-filter: blur(var(--blur-amount)) saturate(var(--saturation));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-lg), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(var(--blur-light)) saturate(var(--saturation));
+  -webkit-backdrop-filter: blur(var(--blur-light)) saturate(var(--saturation));
+}
+
+/* Animações globais */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Scrollbar customizado (webkit) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: background var(--transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Efeitos de seleção */
+::selection {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* Suporte para modo escuro (mantém o mesmo estilo) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Melhorias de acessibilidade */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Foco visível para acessibilidade */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+/* Responsividade para dispositivos touch */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Tipografia responsiva */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 16px;
+  }
+}
