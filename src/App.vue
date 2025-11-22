@@ -78,19 +78,43 @@
 
       <!-- Painel de histórico flutuante -->
       <transition name="slide-fade">
-        <div v-if="pointsStore.history.length > 0" class="floating-history">
+        <div
+          v-if="pointsStore.history.length > 0"
+          class="floating-history"
+          :class="{ collapsed: historyCollapsed }"
+        >
           <GlassCard class="history-card-floating">
-            <HistoryPanel
-              :history="pointsStore.history.slice(0, 5)"
-              @clear="pointsStore.clearHistory()"
-            />
-            <button
-              v-if="pointsStore.history.length > 5"
-              class="view-all-history"
-              @click="showFullHistory = true"
-            >
-              Ver todo histórico ({{ pointsStore.history.length }})
-            </button>
+            <div class="history-toggle-header">
+              <button
+                class="collapse-toggle"
+                @click="historyCollapsed = !historyCollapsed"
+                :title="
+                  historyCollapsed
+                    ? 'Expandir histórico'
+                    : 'Minimizar histórico'
+                "
+              >
+                <span class="toggle-text">📜 Histórico</span>
+                <span class="toggle-icon-chevron">{{
+                  historyCollapsed ? "▲" : "▼"
+                }}</span>
+              </button>
+            </div>
+            <transition name="expand">
+              <div v-show="!historyCollapsed" class="history-content">
+                <HistoryPanel
+                  :history="pointsStore.history.slice(0, 3)"
+                  @clear="pointsStore.clearHistory()"
+                />
+                <button
+                  v-if="pointsStore.history.length > 3"
+                  class="view-all-history"
+                  @click="showFullHistory = true"
+                >
+                  Ver todo histórico ({{ pointsStore.history.length }})
+                </button>
+              </div>
+            </transition>
           </GlassCard>
         </div>
       </transition>
@@ -293,6 +317,7 @@ const showAddPlayerModal = ref(false);
 const showQuickEditModal = ref(false);
 const showFullHistory = ref(false);
 const showEditNameModal = ref(false);
+const historyCollapsed = ref(true);
 const playerName = ref("");
 const playerNameInput = ref(null);
 const inputValue = ref(null);
