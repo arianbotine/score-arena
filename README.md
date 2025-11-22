@@ -56,6 +56,14 @@ score-arena/
 │   │   ├── PlayerCard.vue        # Card de jogador
 │   │   ├── PodiumView.vue        # Visualização de pódio
 │   │   └── PointsDisplay.vue     # Display de pontos
+│   ├── styles/
+│   │   └── components/           # Estilos centralizados dos componentes
+│   │       ├── GlassButton.css
+│   │       ├── GlassCard.css
+│   │       ├── HistoryPanel.css
+│   │       ├── PlayerCard.css
+│   │       ├── PodiumView.css
+│   │       └── PointsDisplay.css
 │   ├── stores/
 │   │   └── pointsStore.js        # Store Pinia
 │   ├── App.vue          # Componente principal
@@ -153,6 +161,10 @@ O ScoreArena utiliza um design moderno baseado em **glassmorphism**, com:
 - Animações suaves em todas as interações
 - Sombras e bordas delicadas
 - Paleta de cores harmoniosa
+
+### Arquitetura de Estilos
+
+Para uma melhor organização e manutenção, os estilos dos componentes são **separados e centralizados** em arquivos CSS dedicados na pasta `src/styles/components/`. Cada componente Vue importa seu respectivo arquivo de estilos de forma scoped, garantindo isolamento e reutilização eficiente.
 
 ---
 
