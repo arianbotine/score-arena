@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="background-gradient"></div>
-    
+
     <ThemeSelector />
 
     <div class="content">

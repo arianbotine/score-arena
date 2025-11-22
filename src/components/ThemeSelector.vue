@@ -1,6 +1,10 @@
 <template>
   <div class="theme-selector-container">
-    <button class="theme-toggle-btn" @click="isOpen = !isOpen" :title="'Tema: ' + themes[themeStore.currentTheme].name">
+    <button
+      class="theme-toggle-btn"
+      @click="isOpen = !isOpen"
+      :title="'Tema: ' + themes[themeStore.currentTheme].name"
+    >
       <span class="theme-icon">{{ themes[themeStore.currentTheme].icon }}</span>
     </button>
 
@@ -26,7 +30,12 @@
               <div class="theme-name">{{ theme.name }}</div>
               <div class="theme-description">{{ theme.description }}</div>
             </div>
-            <div v-if="themeStore.currentTheme === key" class="active-indicator">✓</div>
+            <div
+              v-if="themeStore.currentTheme === key"
+              class="active-indicator"
+            >
+              ✓
+            </div>
           </button>
         </div>
       </div>
@@ -49,10 +58,10 @@ const isOpen = ref(false);
 const selectTheme = (themeName) => {
   themeStore.applyTheme(themeName);
   // Feedback visual
-  const btn = document.querySelector('.theme-toggle-btn');
+  const btn = document.querySelector(".theme-toggle-btn");
   if (btn) {
-    btn.classList.add('pulse-theme');
-    setTimeout(() => btn.classList.remove('pulse-theme'), 600);
+    btn.classList.add("pulse-theme");
+    setTimeout(() => btn.classList.remove("pulse-theme"), 600);
   }
 };
 </script>
@@ -99,7 +108,8 @@ const selectTheme = (themeName) => {
 }
 
 @keyframes float-icon {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -108,7 +118,8 @@ const selectTheme = (themeName) => {
 }
 
 @keyframes pulse-theme {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {

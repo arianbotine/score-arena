@@ -6,7 +6,8 @@ export const themes = {
     name: "Cósmico",
     icon: "🌌",
     description: "Profundo e misterioso",
-    gradient: "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%)",
+    gradient:
+      "linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%)",
     primary: "#8b5cf6",
     secondary: "#3b82f6",
     accent: "#a78bfa",
@@ -18,7 +19,8 @@ export const themes = {
     name: "Pôr do Sol",
     icon: "🌅",
     description: "Quente e acolhedor",
-    gradient: "linear-gradient(135deg, #1a1a2e 0%, #2d1b3d 25%, #3d1b3d 50%, #4a1942 75%, #ff6b6b 100%)",
+    gradient:
+      "linear-gradient(135deg, #1a1a2e 0%, #2d1b3d 25%, #3d1b3d 50%, #4a1942 75%, #ff6b6b 100%)",
     primary: "#ff6b6b",
     secondary: "#feca57",
     accent: "#ff9ff3",
@@ -30,7 +32,8 @@ export const themes = {
     name: "Oceano",
     icon: "🌊",
     description: "Calmo e refrescante",
-    gradient: "linear-gradient(135deg, #0a1128 0%, #001f54 25%, #034078 50%, #1282a2 75%, #0a1128 100%)",
+    gradient:
+      "linear-gradient(135deg, #0a1128 0%, #001f54 25%, #034078 50%, #1282a2 75%, #0a1128 100%)",
     primary: "#1282a2",
     secondary: "#00d4ff",
     accent: "#4dd0e1",
@@ -42,7 +45,8 @@ export const themes = {
     name: "Floresta",
     icon: "🌲",
     description: "Natural e relaxante",
-    gradient: "linear-gradient(135deg, #0d1b2a 0%, #1b263b 25%, #2d4a3e 50%, #3d5a4c 75%, #52796f 100%)",
+    gradient:
+      "linear-gradient(135deg, #0d1b2a 0%, #1b263b 25%, #2d4a3e 50%, #3d5a4c 75%, #52796f 100%)",
     primary: "#52796f",
     secondary: "#84a98c",
     accent: "#cad2c5",
@@ -54,7 +58,8 @@ export const themes = {
     name: "Neon",
     icon: "⚡",
     description: "Vibrante e energético",
-    gradient: "linear-gradient(135deg, #0a0e27 0%, #1a1a2e 25%, #16213e 50%, #240046 75%, #3c096c 100%)",
+    gradient:
+      "linear-gradient(135deg, #0a0e27 0%, #1a1a2e 25%, #16213e 50%, #240046 75%, #3c096c 100%)",
     primary: "#ff006e",
     secondary: "#00f5ff",
     accent: "#ffbe0b",
@@ -66,7 +71,8 @@ export const themes = {
     name: "Lavanda",
     icon: "🌸",
     description: "Suave e elegante",
-    gradient: "linear-gradient(135deg, #1a1a2e 0%, #2d2640 25%, #403d58 50%, #8b7e99 75%, #c8b8db 100%)",
+    gradient:
+      "linear-gradient(135deg, #1a1a2e 0%, #2d2640 25%, #403d58 50%, #8b7e99 75%, #c8b8db 100%)",
     primary: "#b8a9d4",
     secondary: "#e0b1cb",
     accent: "#f5cac3",
@@ -78,7 +84,8 @@ export const themes = {
     name: "Aurora",
     icon: "✨",
     description: "Mágico e inspirador",
-    gradient: "linear-gradient(135deg, #0f0f1e 0%, #1e1b3c 25%, #2d2654 50%, #3d316b 75%, #6a4c93 100%)",
+    gradient:
+      "linear-gradient(135deg, #0f0f1e 0%, #1e1b3c 25%, #2d2654 50%, #3d316b 75%, #6a4c93 100%)",
     primary: "#6a4c93",
     secondary: "#1ac8ed",
     accent: "#f72585",
@@ -90,7 +97,8 @@ export const themes = {
     name: "Menta",
     icon: "🍃",
     description: "Fresco e limpo",
-    gradient: "linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 25%, #2e5266 50%, #48a9a6 75%, #76c893 100%)",
+    gradient:
+      "linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 25%, #2e5266 50%, #48a9a6 75%, #76c893 100%)",
     primary: "#48a9a6",
     secondary: "#76c893",
     accent: "#c1fba4",
@@ -102,7 +110,8 @@ export const themes = {
     name: "Doce",
     icon: "🍬",
     description: "Doce e divertido",
-    gradient: "linear-gradient(135deg, #2b1b35 0%, #3d2c4d 25%, #5e3d66 50%, #d6729c 75%, #ffc2d4 100%)",
+    gradient:
+      "linear-gradient(135deg, #2b1b35 0%, #3d2c4d 25%, #5e3d66 50%, #d6729c 75%, #ffc2d4 100%)",
     primary: "#ff6fb5",
     secondary: "#ffb8d1",
     accent: "#ffd6e8",
@@ -114,7 +123,8 @@ export const themes = {
     name: "Meia-Noite",
     icon: "🌙",
     description: "Misterioso e sofisticado",
-    gradient: "linear-gradient(135deg, #000000 0%, #0d1117 25%, #161b22 50%, #21262d 75%, #30363d 100%)",
+    gradient:
+      "linear-gradient(135deg, #000000 0%, #0d1117 25%, #161b22 50%, #21262d 75%, #30363d 100%)",
     primary: "#58a6ff",
     secondary: "#79c0ff",
     accent: "#a5d6ff",
