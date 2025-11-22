@@ -1,6 +1,8 @@
 <template>
   <div class="app-container">
     <div class="background-gradient"></div>
+    
+    <ThemeSelector />
 
     <div class="content">
       <header class="app-header">
@@ -305,10 +307,10 @@ import { ref, computed, watch, nextTick } from "vue";
 import { usePointsStore } from "./stores/pointsStore";
 import GlassCard from "./components/GlassCard.vue";
 import GlassButton from "./components/GlassButton.vue";
-import PointsDisplay from "./components/PointsDisplay.vue";
 import HistoryPanel from "./components/HistoryPanel.vue";
 import PlayerCard from "./components/PlayerCard.vue";
 import PodiumView from "./components/PodiumView.vue";
+import ThemeSelector from "./components/ThemeSelector.vue";
 
 const pointsStore = usePointsStore();
 
